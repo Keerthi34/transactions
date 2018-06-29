@@ -7,6 +7,19 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/getbystudentid/:Student_Id', function(req, res, next) {
+  winston.log('info',"Info: Get all class records")
+  console.log("info");
+  Transaction.find({Student_Id: req.params.Student_Id},function(err,data){
+      if(err)
+      res.status(500).send(err);
+      else {
+        res.status(200).json(data);
+      }
+  })
+});
+
+
 /*Fee payment*/
 router.post('/newtransaction', function(req,res,next){
   var t= new Transaction(
@@ -81,7 +94,7 @@ router.get('/transaction', function(req, res, next) {
 
 /*Get all details*/
 router.get('/transactiondetails/:Student_Id', function(req, res, next) {
-  winston.log('info',"Info: Get all class records")
+  winston.log('info',"Info: Get all transaction records")
   console.log("info");
   Transaction.find({Student_Id: req.params.Student_Id},function(err,data){
       if(err)
